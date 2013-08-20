@@ -1,0 +1,15 @@
+﻿/*
+ * Select the calling method
+ */
+#ifdef MULTI_CACHE
+
+extern struct cpu_cache_fns cpu_cache;
+
+#define __cpuc_coherent_kern_range		cpu_cache.coherent_kern_range
+
+
+/*
+ * Perform necessary cache operations to ensure that data previously
+ * stored within this range of addresses can be executed by the CPU.
+ */
+#define flush_icache_range(s, e)	__cpuc_coherent_kern_range(s, e)
